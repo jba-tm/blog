@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags i18n %}
+
+{% block title %}{% trans 'Content index page' %}{% endblock %}
+
+{% block breadcrumb-title %}
+    {% trans 'Content index page' %}
+{% endblock %}
+
+{% block breadcrumb-item %}
+    <li class="breadcrumb-item active">
+        <strong>{% trans 'Content index page' %}</strong>
+    </li>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox animated fadeIn">
+                <div class="ibox-content">
+                    <div class="search-form">
+                        <form method="get" action="{% url 'search' %}">
+                            <div class="input-group">
+                                <input type="search" placeholder="{% trans 'Search' %}"
+                                       name="query" value="{{ request.GET.search }}" autocomplete="off"
+                                       class="form-control form-control-lg">
+                                <div class="input-group-append">
+                                    <button class="btn btn-lg btn-primary" type="submit">
+                                        {% trans 'Search' %}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="list-group elements-list mt-2">
+                        {% for content_page in content_pages %}
+                                <li class="list-group-item">
+
+                                    <div class="btn-group float-right">
+                                        <a href="{% url 'content-pdf' content_page.slug %}" class="btn btn-white btn-sm" title="{% trans 'PDF' %}"><i class="fa fa-file-pdf"></i> {% trans 'PDF' %}</a>
+                                        <a href="{% pageurl content_page %}" class="btn btn-white btn-sm" title="{% trans 'View' %}"><i class="fa fa-folder"></i> {% trans 'View' %}</a>
+                                    </div>
+
+                                    <a href="{% pageurl content_page %}" class="nav-link">
+                                        <h3 class="text-break">{{ content_page.title }}</h3>
+                                        <div class="pt-2 display-first-child">
+                                            {{ content_page.specific.body|richtext }}
+                                        </div>
+
+                                        <i class="fa fa-clock"></i> {{ content_page.specific.last_published_at}}
+
+{#                                        {% if c.is_blocked %}#}
+{#                                            <span class="label label-danger">{{ c.get_is_blocked }}</span>#}
+{#                                        {% else %}#}
+{#                                            <span class="label label-primary">{{ c.get_is_blocked }}</span>#}
+{#                                        {% endif %}#}
+                                    </a>
+                                </li>
+
+
+                        {% empty %}
+                            {% trans 'Empty content list' %}
+                        {% endfor %}
+                    </ul>
+                    <div class="hr-line-dashed"></div>
+                    {% include 'utils/paginate/pagination_show_all_page_number.html' with page_obj=content_pages %}
+                </div>
+            </div>
+        </div>
+</div>
+
+
+{% endblock content %}

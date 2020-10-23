@@ -1,0 +1,17 @@
+{% load i18n wagtailcore_tags %}
+
+<div class="navbar-expand bg-primary">
+    <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav mr-auto">
+                    <li class="">
+                        <a class="text-dark" aria-expanded="false" href="{% pageurl home_page %}"> {% trans home_page.title %}</a>
+                    </li>
+                {% for menu_item in home_page.get_children.live.in_menu %}
+                    <li class="dropdown">
+                        <a class="text-dark" aria-expanded="false" href="{% pageurl menu_item %}"> {% trans menu_item.title %}</a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+</div>

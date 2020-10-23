@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags i18n static %}
+
+{% block extra_css %}
+    <!-- blueimp gallery -->
+    <link href="{% static 'plugins/blueimp/css/blueimp-gallery.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block breadcrumb-title %}
+     {{ page.title }}
+{% endblock %}
+
+{% block breadcrumb-item %}
+    <li class="breadcrumb-item" ><a href="{{ page.get_parent.url }}">{{ page.get_parent.title }}</a></li>
+    <li class="breadcrumb-item active"><strong>{{ page.title }}</strong></li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="ibox">
+                        <div class="ibox-heading">
+                            <div class="ibox-title p-3">
+                                <div class="btn-group float-right">
+                                    <a href="{% url 'content-pdf' page.slug %}" class="btn btn-white btn-xs" title="{% trans 'PDF' %}"><i class="fa fa-file-pdf"></i></a>
+                                </div>
+                                <h2>{{ page.title }}</h2>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right"><dt>{% trans 'Putted by' %}:</dt> </div>
+                                        <div class="col-sm-8 text-sm-left"><dd class="mb-1">{{ page.owner }}</dd> </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right"><dt>{% trans 'Direction' %}:</dt> </div>
+                                        <div class="col-sm-8 text-sm-left"> <dd class="mb-1">{{ page.direction|default:'' }}</dd></div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right"><dt>{% trans 'Type' %}:</dt> </div>
+                                        <div class="col-sm-8 text-sm-left"> <dd class="mb-1">{{ page.type|default:'' }}</dd></div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right"> <dt>{% trans 'Importance' %}:</dt></div>
+                                        <div class="col-sm-8 text-sm-left"> <dd class="mb-1">{{ page.importance|default:'' }}</dd></div>
+                                    </dl>
+
+                                </div>
+                                <div class="col-lg-6" id="cluster_info">
+
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right">
+                                            <dt>{% trans 'Published at' %}:</dt>
+                                        </div>
+                                        <div class="col-sm-8 text-sm-left">
+                                            <dd class="mb-1">{{ page.last_published_at }}</dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right">
+                                            <dt>{% trans 'Content date' %}:</dt>
+                                        </div>
+                                        <div class="col-sm-8 text-sm-left">
+                                            <dd class="mb-1">{{ page.content_datetime }}</dd>
+                                        </div>
+                                    </dl>
+
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right">
+                                            <dt>{% trans 'Tags' %}:</dt>
+                                        </div>
+                                        <div class="col-sm-8 text-sm-left">
+                                            {% if page.tags.all.count %}
+                                                {% for tag in page.tags.all %}
+                                                    <a href="{% slugurl 'tags' %}?tag={{ tag }}"><span class="badge badge-info">#{{ tag }}</span></a>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </dl>
+
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-4 text-sm-right">
+                                            <dt>{% trans 'Categories' %}:</dt>
+                                        </div>
+                                        <div class="col-sm-8 text-sm-left">
+
+                                            {% with categories=page.categories.all %}
+                                                {% if categories %}
+                                                    {% for category in categories %}
+                                                        <span class="badge badge-primary">{{ category.name }}</span>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endwith %}
+                                        </div>
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="row m-t-sm">
+                                <div class="col-lg-12">
+                                    <div class="panel blank-panel">
+                                        <div class="panel-heading">
+                                            <div class="panel-options">
+                                                <ul class="nav nav-tabs">
+                                                    <li><a class="nav-link active" href="#tab-1" data-toggle="tab">{% trans 'Body' %}</a></li>
+                                                    <li><a class="nav-link" href="#tab-2" data-toggle="tab">{% trans 'Images' %}</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel-body">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="tab-1">
+                                                    <div class="feed-activity-list">
+                                                        {{ page.body|richtext }}
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab-2">
+                                                    <div class="feed-activity-list">
+                                                        <div class="lightBoxGallery">
+                                                             {% for item in page.gallery_images.all %}
+                                                                 <div class="float-left">
+                                                                    <a href="{% image_url item.image 'original' %}" title="{{ item.caption }}"  data-gallery="">{% image item.image width-100 %}</a>
+                                                                    <p>{{ item.caption }}</p>
+                                                                 </div>
+                                                             {% endfor %}
+
+                                                            <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+                                                            <div id="blueimp-gallery" class="blueimp-gallery">
+                                                                <div class="slides"></div>
+                                                                <h3 class="title"></h3>
+                                                                <a class="prev">‹</a>
+                                                                <a class="next">›</a>
+                                                                <a class="close">×</a>
+                                                                <a class="play-pause"></a>
+                                                                <ol class="indicator"></ol>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <!-- blueimp gallery -->
+    <script src="{% static 'plugins/blueimp/js/jquery.blueimp-gallery.min.js' %}"></script>
+{% endblock %}

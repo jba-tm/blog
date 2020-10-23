@@ -1,0 +1,82 @@
+{% load i18n wagtailuserbar wagtailcore_tags %}
+
+
+<!DOCTYPE html>
+<html  lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="refresh" content="301">
+
+    <title>
+    {% trans 'Application' %} -
+        {% block title %}
+            {% if self.seo_title %}{% trans self.seo_title %}{% else %}{% trans self.title %}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+            {% with self.get_site.site_name as site_name %}
+                {% if site_name %}- {% trans site_name %}{% endif %}
+            {% endwith %}
+        {% endblock %}
+    </title>
+
+    {# Global stylesheets #}
+    {% include 'utils/css.html' %}
+
+    {% block extra_css %}
+        {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+
+{% if user.is_superuser %}
+    <body>
+{% else %}
+    <body class="md-skin" >
+{% endif %}
+    <div id="wrapper">
+        {% include 'utils/sidebar.html' %}
+
+        <div id="page-wrapper" class="gray-bg">
+            {% include 'utils/header.html' %}
+
+            {% include 'utils/navbar.html' %}
+
+            <div class="row wrapper white-bg page-heading">
+                <div class="col-xl-10 col-lg-10 col-md-6 col-sm-10 col-10">
+                    <h2>{% block breadcrumb-title %}{% trans 'Home' %}{% endblock %}</h2>
+                    <ol class="breadcrumb col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
+                        <li class="breadcrumb-item">
+                            <a href="{% slugurl 'home' %}">{% trans 'Home' %}</a>
+                        </li>
+                        {% block breadcrumb-item %}{% endblock %}
+    {#                        <li class="breadcrumb-item active">#}
+    {#                            <strong>Breadcrumb</strong>#}
+    {#                        </li>#}
+                    </ol>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <div class="alert alert-{{ message.tags|default:"" }} m-0">
+                                    {{ message }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% block content %}{% endblock %}
+            </div>
+            {% include 'utils/footer.html' %}
+        </div>
+    </div>
+</body>
+
+    {% include 'utils/javascript.html' %}
+    {% block extra_js %}
+        {# Override this in templates to add extra javascript #}
+    {% endblock %}
+</html>

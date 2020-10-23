@@ -1,0 +1,18 @@
+div.display-first-child>div.rich-text>p{
+    display: none;
+    max-height: 200px;
+}
+
+div.display-first-child>div.rich-text{
+    max-height: 200px !important;
+}
+
+div.display-first-child>div.rich-text>:first-child {
+    text-align: justify;
+    display: -webkit-box;
+    max-height: 200px;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags %}
+
+{% block breadcrumb-title %}
+    {% trans 'Home - last 10 contents' %}
+{% endblock %}
+
+{% block content %}
+    {% for last_content in last_contents %}
+
+    <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="ibox product-detail">
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-5">
+
+
+                                    <div class="content-images" >
+{#                                         {% for item in last_content.gallery_images.all %}#}
+                                            <div class="m-auto">
+                                                <div class="image-imitation p-0 m-auto">
+                                                    {% if last_content.gallery_images.all.count %}
+                                                        <img src="{% image_url last_content.gallery_images.first.image 'height-300' %}"
+                                                             class="d-block mt-auto m-auto" alt="{{ last_content.gallery_images.first.caption }}">
+                                                    {% else%}
+                                                        <img src="{% static 'images/no_image.png' %}" alt="{% trans 'No image' %}" height="300" />
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+{#                                         {% endfor %}#}
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-7">
+                                    <a href="{% pageurl last_content %}" class="h2 font-bold m-b-xs">{{ last_content.title }}</a>
+                                    <div>
+                                        {% if last_content.tags.all.count %}
+                                            {% for tag in last_content.tags.all %}
+                                                <a href="{% slugurl 'tags' %}?tag={{ tag }}"><span class="badge badge-info">#{{ tag }}</span></a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="help-icon m-t-md">
+                                        <h2 class="h-100">
+                                            <div class="badge badge-primary">{% trans 'Direction:' %} {{ last_content.direction }}</div>
+                                            <div class="badge badge-primary">{% trans 'Importance:' %} {{ last_content.importance }}</div>
+                                            <div class="badge badge-primary">{% trans 'Content datetime:' %} {{ last_content.content_datetime|date:'d.m.Y H:i' }}</div>
+                                        </h2>
+                                    </div>
+                                    <hr>
+
+                                    <h4>{% trans 'Body' %}</h4>
+
+                                    <div class="small text-muted display-first-child">
+                                        {{ last_content.body|richtext }}
+                                    </div>
+                                    <hr>
+                                        <div class="">
+                                            <dt>{% trans 'Categories' %}:</dt>
+                                            {% with categories=last_content.categories.all %}
+                                                {% if categories %}
+                                                    {% for category in categories %}
+                                                        <span class="badge badge-secondary">{{ category.name }}</span>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endwith %}
+                                        </div>
+
+                                    <hr>
+
+                                    <div>
+                                        <div class="btn-group">
+                                            <a href="{% pageurl last_content %}" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> {% trans 'View' %}</a>
+                                            <a href="{% url 'content-pdf' last_content.slug %}" class="btn btn-white btn-sm"><i class="fa fa-file-pdf"></i> {% trans 'PDF' %}</a>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="ibox-footer">
+{#                            <div class="float-right">#}
+                                <i class="fa fa-clock"></i> {{last_content.last_published_at|date:'d.m.Y H:i' }}
+{#                            </div>#}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    {% endfor %}
+
+
+{% endblock content %}
+
+{#{% block extra_js %}#}
+{#    <!-- slick -->#}
+{#    <script src="{% static 'plugins/slick/slick.min.js' %}"></script>#}
+{##}
+{#    <script>#}
+{#        $(document).ready(function(){#}
+{#            $('.content-images').slick({#}
+{#                dots: true#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+{#{% endblock %}#}

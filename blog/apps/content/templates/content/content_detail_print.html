@@ -1,0 +1,22 @@
+{% load wagtailimages_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ contentpage.title }}</title>
+</head>
+<body class="padding-0">
+    <h4 class="center margin-0">{{ contentpage.title }}</h4>
+    <br>
+
+    {% if contentpage.gallery_images.all.count %}
+     {% for item in contentpage.gallery_images.all %}
+        <div>
+          <img src="{% image_url item.image 'height-300' %}"  class="image-center" alt="{{ item.caption }}">
+        </div>
+     {% endfor %}
+    <br>
+    {% endif %}
+    <div class="text-indention margin-0">{{ contentpage.body|safe }}</div>
+</body>
+</html>

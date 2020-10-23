@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-16 09:43+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\Application\settings\base.py:190
+msgid "English"
+msgstr ""
+
+#: .\Application\settings\base.py:191
+msgid "Russian"
+msgstr ""
+
+#: .\Application\settings\dev.py:25
+msgid "Contents management test server"
+msgstr ""
+
+#: .\Application\settings\production.py:12
+msgid "Contents management"
+msgstr ""
+
+#: .\Application\templates\404.html:4 .\Application\templates\404.html:8
+msgid "Page not found"
+msgstr ""
+
+#: .\Application\templates\404.html:10
+msgid "Sorry, this page could not be found."
+msgstr ""
+
+#: .\Application\templates\500.html:4 .\Application\templates\500.html:8
+msgid "Internal server error"
+msgstr ""
+
+#: .\Application\templates\500.html:10
+msgid "Sorry, there seems to be an error. Please try again soon."
+msgstr ""
+
+#: .\Application\templates\admin\login.html:3
+#: .\Application\templates\admin\login.html:92
+#: .\Application\templates\utils\login.html:3
+#: .\Application\templates\utils\login.html:92
+msgid "Sign in"
+msgstr ""
+
+#: .\Application\templates\admin\login.html:7
+msgid "Application admin panel"
+msgstr ""
+
+#: .\Application\templates\admin\login.html:32
+#: .\Application\templates\utils\login.html:32
+#, python-format
+msgid "Your %(username_field)s and password didn't match. Please try again."
+msgstr ""
+
+#: .\Application\templates\admin\login.html:48
+msgid "Sign in to Admin panel"
+msgstr ""
+
+#: .\Application\templates\admin\login.html:92
+#: .\Application\templates\utils\login.html:92
+msgid "Signing in…"
+msgstr ""
+
+#: .\Application\templates\layout\base.html:13
+#: .\Application\templates\utils\login.html:7
+msgid "Application"
+msgstr ""
+
+#: .\Application\templates\layout\base.html:46
+#: .\Application\templates\layout\base.html:49
+msgid "Home"
+msgstr ""
+
+#: .\Application\templates\utils\header.html:9
+msgid "Search"
+msgstr ""
+
+#: .\Application\templates\utils\header.html:20
+#: .\Application\templates\utils\sidebar.html:16
+msgid "Log out"
+msgstr ""
+
+#: .\Application\templates\utils\login.html:48
+msgid "Sign in to System"
+msgstr ""
+
+#: .\Application\templates\utils\sidebar.html:33
+msgid "Empty content list"
+msgstr ""
+
+#: .\Application\templates\wagtailadmin\base.html:5
+#: .\Application\templates\wagtailadmin\login.html:5
+msgid "Application CMS"
+msgstr ""
+
+#: .\Application\templates\wagtailadmin\home.html:4
+msgid "Welcome to Sytem CMS"
+msgstr ""
+
+#: .\Application\templates\wagtailadmin\login.html:8
+msgid "Sign in to System CMS"
+msgstr ""

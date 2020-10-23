@@ -1,0 +1,159 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-16 08:54+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\content\models.py:59 .\content\templates\content\content_index_page.html:5
+#: .\content\templates\content\content_index_page.html:8
+#: .\content\templates\content\content_index_page.html:13
+msgid "Content index page"
+msgstr "Maglumatlar sahypasy"
+
+#: .\content\models.py:66 .\content\templates\content\content_page.html:109
+msgid "Body"
+msgstr "Mazmuny"
+
+#: .\content\models.py:66
+msgid "Content body"
+msgstr "Maglumatyň mazmuny"
+
+#: .\content\models.py:67 .\content\models.py:68
+msgid "Content datetime"
+msgstr "Magluamtyň wagty"
+
+#: .\content\models.py:71 .\content\templates\content\content_page.html:40
+msgid "Direction"
+msgstr "Ugur"
+
+#: .\content\models.py:71 .\content\models.py:184
+msgid "Content direction"
+msgstr "Maglumatyň ugry"
+
+#: .\content\models.py:73 .\content\templates\content\content_page.html:44
+msgid "Type"
+msgstr "Görnüş"
+
+#: .\content\models.py:74 .\content\models.py:212
+msgid "Content type"
+msgstr "Maglumatyň görnüşi"
+
+#: .\content\models.py:77 .\content\templates\content\content_page.html:48
+msgid "Importance"
+msgstr "Wajyplyk"
+
+#: .\content\models.py:77 .\content\models.py:198
+msgid "Content importance"
+msgstr "Maglumatyň wajyplygy"
+
+#: .\content\models.py:81 .\content\templates\content\content_page.html:87
+msgid "Categories"
+msgstr "Kategoriýalar"
+
+#: .\content\models.py:82 .\content\models.py:170
+msgid "Content categories"
+msgstr "Maglumatyň kategoriýalary"
+
+#: .\content\models.py:109
+msgid "Content information"
+msgstr "Maglumatyň düzümi"
+
+#: .\content\models.py:109
+msgid "Content base information"
+msgstr "Maglumatyň esasy düzümi"
+
+#: .\content\models.py:114
+msgid "Content advance information"
+msgstr "Maglumatyň goşmaça düzümi"
+
+#: .\content\models.py:116
+msgid "Content images"
+msgstr "Maglumatyň suratlary"
+
+#: .\content\models.py:171
+msgid "Content category"
+msgstr "Maglumatyň kategoriýasy"
+
+#: .\content\models.py:177 .\content\models.py:191 .\content\models.py:205
+msgid "Name"
+msgstr "At"
+
+#: .\content\models.py:183
+msgid "Content directions"
+msgstr "Maglumatyň ugurlary"
+
+#: .\content\models.py:197
+msgid "Content importances"
+msgstr "Maglumatyň wajyplyklary"
+
+#: .\content\models.py:211
+msgid "Content types"
+msgstr "Maglumatyň görnüşleri"
+
+#: .\content\templates\content\content_index_page.html:27
+#: .\content\templates\content\content_index_page.html:32
+msgid "Search"
+msgstr "Gözleg"
+
+#: .\content\templates\content\content_index_page.html:44
+#: .\content\templates\content\content_page.html:27
+msgid "PDF"
+msgstr "PDF"
+
+#: .\content\templates\content\content_index_page.html:45
+#: .\content\templates\content\content_tag_index_page.html:40
+msgid "View"
+msgstr "Görmek"
+
+#: .\content\templates\content\content_index_page.html:66
+msgid "Empty content list"
+msgstr "Boş maglumat sanawy"
+
+#: .\content\templates\content\content_page.html:36
+msgid "Putted by"
+msgstr "Tarapyndan goýuldy"
+
+#: .\content\templates\content\content_page.html:57
+msgid "Published at"
+msgstr "Tassyklanan wagty"
+
+#: .\content\templates\content\content_page.html:65
+msgid "Content date"
+msgstr "Maglumatyň wagty"
+
+#: .\content\templates\content\content_page.html:74
+msgid "Tags"
+msgstr "Tegler"
+
+#: .\content\templates\content\content_page.html:110
+msgid "Images"
+msgstr "Suratlar"
+
+#: .\content\templates\content\content_tag_index_page.html:5
+#: .\content\templates\content\content_tag_index_page.html:9
+#: .\content\templates\content\content_tag_index_page.html:14
+#, fuzzy
+#| msgid "Content type"
+msgid "Content tag page"
+msgstr "Maglumatyň görnüşi"
+
+#: .\content\templates\content\content_tag_index_page.html:29
+msgid "Showing pages tagged"
+msgstr "Tegler sahypasyny görkezmek"
+
+#: .\content\templates\content\content_tag_index_page.html:55
+msgid "No pages found with that tag."
+msgstr "Bu tegi boýunça sahypalar tapylmady."

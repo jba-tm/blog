@@ -1,0 +1,31 @@
+{% load static %}
+{% load i18n %}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% include 'utils/css.html' %}
+
+
+</head>
+
+<body class="gray-bg">
+
+    {% block content %}{% endblock %}
+
+</body>
+    <!-- jquery 3.4.1 -->
+    <script src="{% static 'plugins/jQuery/jquery-3.4.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="{% static 'plugins/popper/popper.min.js' %}"></script>
+    <!-- bootstap js -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+</html>

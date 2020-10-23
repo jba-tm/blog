@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header w-75">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
+        <form role="search" class="navbar-form-custom w-75" action="{% url 'search' %}">
+            <div class="form-group">
+                <input type="search" placeholder="{% trans 'Search' %}" class="form-control h-50 border b-r-xl" style="margin-top: 13px;" name="query" id="top-search" autocomplete="off">
+
+            </div>
+        </form>
+    </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <div class="ml-2">{% now 'd.m.Y H:i' %}</div>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}">
+                    <i class="fa fa-sign-out-alt"></i> {% trans 'Log out' %}
+                </a>
+            </li>
+{#            <li>#}
+{#                <a class="right-sidebar-toggle">#}
+{#                    <i class="fa fa-tasks"></i>#}
+{#                </a>#}
+{#            </li>#}
+        </ul>
+
+    </nav>
+</div>

@@ -1,0 +1,55 @@
+<div class="text-center">
+    <div class="btn-group">
+        {% if  page_obj.number is 1 %}
+            <a href="?page=1" class="btn btn-white disabled"><i class="fa fa-angle-double-left"></i></a>
+        {% else %}
+            <a href="?page=1" class="btn btn-white"><i class="fa fa-angle-double-left"></i></a>
+        {% endif %}
+
+
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-white"><i class="fa fa-angle-left"></i></a>
+        {% else %}
+            <a class="btn btn-white disabled col-auto"><i class="fa fa-angle-left"></i></a>
+        {% endif %}
+
+
+{#        {% for i in 1|range:page_obj.paginator.num_pages %}#}
+{#            {% if page_obj.number is i %}#}
+{#                <a href="?page={{ i }}" class="btn btn-white active disabled">{{ i }}</a>#}
+{#            {% else %}#}
+{#                <a href="?page={{ i }}" class="btn btn-white">{{ i }}</a>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+
+                <span class="btn btn-white active">{{ page_obj.number }}</span>
+
+{#        <a href="?page={{ page_obj.number }}" class="btn btn-white active disabled">{{ page_obj.number }}</a>#}
+
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-white"><i class="fa fa-angle-right"></i></a>
+        {% else %}
+            <a class="btn btn-white disabled"><i class="fa fa-angle-right"></i></a>
+        {% endif %}
+
+
+        {% if  page_obj.number >= page_obj.paginator.num_pages %}
+            <a href="" class="btn btn-white disabled col-auto"><i class="fa fa-angle-double-right"></i></a>
+        {% else %}
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-white col-auto"><i class="fa fa-angle-double-right"></i></a>
+        {% endif %}
+
+{#        <button class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>#}
+{#        <button class="btn btn-white">1</button>#}
+{#        <button class="btn btn-white  active">2</button>#}
+{#        <button class="btn btn-white">3</button>#}
+{#        <button class="btn btn-white">4</button>#}
+{#        <button class="btn btn-white">5</button>#}
+{#        <button class="btn btn-white">6</button>#}
+{#        <button class="btn btn-white">7</button>#}
+{#        <button class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>#}
+    </div>
+</div>
+
+

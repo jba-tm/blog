@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags i18n %}
+
+
+{% block title %}{% trans 'Search result' %}{% endblock %}
+
+{% block main-title %}
+    {% trans 'Search result' %}
+{% endblock %}
+
+{% block breadcrumb-item %}
+    <li class="breadcrumb-item active">
+        <strong>{% trans 'Search result' %}</strong>
+    </li>
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox animated fadeIn">
+                <div class="ibox-content">
+                    <div class="search-form">
+                        <form method="get" action="{% url 'search' %}">
+                            <div class="input-group">
+                                <input type="search" placeholder="{% trans 'Search' %}"
+                                       name="query" value="{{ request.GET.query }}" autocomplete="off"
+                                       class="form-control form-control-lg">
+                                <div class="input-group-append">
+                                    <button class="btn btn-lg btn-primary" type="submit">
+                                        {% trans 'Search' %}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="list-group elements-list mt-2">
+                        {% for result in search_results %}
+                                <li class="list-group-item">
+
+                                    <div class="btn-group float-right">
+                                        <a href="{% pageurl result %}" class="btn btn-white btn-sm" title="{% trans 'View' %}"><i class="fa fa-folder"></i> {% trans 'View' %}</a>
+                                    </div>
+
+                                    <a href="{% pageurl result %}" class="nav-link">
+                                        <h3 class="text-break">{{ result.title }}</h3>
+                                        <div class="pt-2 display-first-child">
+                                            {{ result.specific.body|richtext }}
+                                        </div>
+
+                                        <i class="fa fa-clock"></i> {{ result.specific.last_published_at}}
+                                    </a>
+                                </li>
+
+
+                        {% empty %}
+                            {% trans 'No results found' %}
+                        {% endfor %}
+                    </ul>
+                    <div class="hr-line-dashed"></div>
+{#                    {% include 'public/paginate/pagination_show_one_page_number.html' %}#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
