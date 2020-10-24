@@ -64,6 +64,9 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
 
+    'wagtail.contrib.postgres_search',
+
+
     'modelcluster',
     'taggit',
 
@@ -172,9 +175,11 @@ WAGTAILSEARCH_BACKENDS = {
     #     'BACKEND': 'wagtail.search.backends.db',
     # },
 
-    # 'default': {
-    #     'BACKEND': 'wagtail.contrib.postgres_search.backend',
-    # },
+    'default': {
+        'BACKEND': 'wagtail.contrib.postgres_search.backend',
+        'AUTO_UPDATE': True,
+        'ATOMIC_REBUILD': True,
+    },
 
     # 'default': {
     #     'BACKEND': 'wagtail.search.backends.elasticsearch7',
