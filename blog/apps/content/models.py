@@ -13,6 +13,7 @@ from wagtail.search import index
 from django.utils.translation import ugettext_lazy as _
 from wagtail.snippets.models import register_snippet
 
+
 # from blog import settings
 
 
@@ -21,6 +22,8 @@ class ContentIndexPage(Page):
     subpage_types = ['content.ContentPage']
     max_count_per_parent = 1
     show_in_menus_default = True
+    _all_entries = None
+    _paginate = None
 
     # def get_context(self, request, *args, **kwargs):
     #     # Update context to include only published posts, ordered by reverse-chron
@@ -33,27 +36,32 @@ class ContentIndexPage(Page):
         """Adding custom stuff to our context."""
         context = super().get_context(request, *args, **kwargs)
         # Get all posts
-        all_posts = self.get_children().live().order_by('-first_published_at')
+        self._all_entries = self.get_children().live().order_by('-first_published_at')
+
+        self.paginate(request)
+        # self._filter_tag(request)
+
+        # "posts" will have child pages; you'll need to use .specific in the template
+        # in order to access child properties, such as youtube_video_id and subtitle
+        context['content_pages'] = self._all_entries
+        # context['posts'] = self._all_entries
+        return context
+
+    def paginate(self, request):
         # Paginate all posts by 2 per page
-        paginator = Paginator(all_posts, 25)
+        paginator = Paginator(self._all_entries, 25)
         # Try to get the ?page=x value
         page = request.GET.get("page")
         try:
             # If the page exists and the ?page=x is an int
-            content_pages = paginator.page(page)
+            self._paginate = paginator.page(page)
         except PageNotAnInteger:
             # If the ?page=x is not an int; show the first page
-            content_pages = paginator.page(1)
+            self._paginate = paginator.page(1)
         except EmptyPage:
             # If the ?page=x is out of range (too high most likely)
             # Then return the last page
-            content_pages = paginator.page(paginator.num_pages)
-
-        # "posts" will have child pages; you'll need to use .specific in the template
-        # in order to access child properties, such as youtube_video_id and subtitle
-        context['content_pages'] = content_pages
-        context['posts'] = content_pages
-        return context
+            self._paginate = paginator.page(paginator.num_pages)
 
     class Meta:
         verbose_name = _('Content index page')
@@ -63,63 +71,35 @@ class ContentPage(Page):
     parent_page_types = ['content.ContentIndexPage']
     subpage_types = []
 
-    body = RichTextField(verbose_name=_('Body'), help_text=_('Content body'),)
-    content_datetime = models.DateTimeField(null=True, verbose_name=_('Content datetime'),
-                                            help_text=_('Content datetime'))
+    body = RichTextField(verbose_name=_('Body'), help_text=_('Content body'), )
 
-    direction = ParentalKey('ContentDirection', null=True, on_delete=models.SET_NULL,
-                            verbose_name=_('Direction'), help_text=_('Content direction'))
-
-    type = ParentalKey('ContentType', null=True, on_delete=models.SET_NULL, verbose_name=_('Type'),
-                       help_text=_('Content type'))
-
-    importance = ParentalKey('ContentImportance', null=True, on_delete=models.SET_NULL,
-                             verbose_name=_('Importance'), help_text=_('Content importance'))
+    category = ParentalKey('ContentCategory', null=True, on_delete=models.SET_NULL,
+                           verbose_name=_('Category'), help_text=_('Content category'))
 
     tags = ClusterTaggableManager(through='ContentPageTag', blank=True)
 
-    categories = ParentalManyToManyField('ContentCategory', blank=True, verbose_name=_('Categories'),
-                                         help_text=_('Content categories'))
+    # categories = ParentalManyToManyField('ContentCategory', blank=True, verbose_name=_('Categories'),
+    #                                      help_text=_('Content categories'))
 
     search_fields = Page.search_fields + [
-        index.SearchField('body'),
-        index.SearchField('tags'),
-        index.RelatedFields('direction', [
-            index.SearchField('name'),
+        index.SearchField('body', partial_match=True),
+        index.SearchField('tags', partial_match=True),
+        index.RelatedFields('category', [
+            index.SearchField('name', partial_match=True),
         ]),
 
-        index.RelatedFields('type', [
-            index.SearchField('name'),
-        ]),
+        # index.RelatedFields('categories', [
+        #     index.SearchField('name'),
+        # ]),
 
-        index.RelatedFields('importance', [
-            index.SearchField('name'),
-        ]),
-
-        index.RelatedFields('importance', [
-            index.SearchField('name'),
-        ]),
-
-        index.RelatedFields('categories', [
-            index.SearchField('name'),
-        ]),
-
-        index.RelatedFields('type', [
-            index.SearchField('name'),
-        ]),
     ]
 
     content_panels = Page.content_panels + [
         MultiFieldPanel([
-            FieldPanel('content_datetime'),
             FieldPanel('tags'),
-            FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+            # FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('category'),
         ], heading=_('Content information'), help_text=_('Content base information')),
-        MultiFieldPanel([
-            FieldPanel('direction'),
-            FieldPanel('type'),
-            FieldPanel('importance'),
-        ], heading=_('Content advance information'), help_text=_('Content advance information')),
         FieldPanel('body', classname="full"),
         InlinePanel('gallery_images', label="Gallery images", help_text=_('Content images')),
     ]
@@ -150,7 +130,6 @@ class ContentTagIndexPage(Page):
     max_count_per_parent = 1
 
     def get_context(self, request, *args, **kwargs):
-
         # Filter by tag
         tag = request.GET.get('tag')
         content_pages = ContentPage.objects.filter(tags__name=tag)
@@ -178,7 +157,7 @@ class ContentPageGalleryImage(Orderable):
 
 
 @register_snippet
-class ContentCategory(models.Model):
+class ContentCategory(ClusterableModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_('Name'))
 
     panels = [
@@ -191,47 +170,5 @@ class ContentCategory(models.Model):
     class Meta:
         verbose_name_plural = _('Content categories')
         verbose_name = _('Content category')
-        ordering = ['name']
-        default_permissions = ()
-
-
-@register_snippet
-class ContentDirection(ClusterableModel):
-    name = models.CharField(max_length=20, unique=True, verbose_name=_('Name'))
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = _('Content directions')
-        verbose_name = _('Content direction')
-        ordering = ['name']
-        default_permissions = ()
-
-
-@register_snippet
-class ContentImportance(ClusterableModel):
-    name = models.CharField(max_length=20, unique=True, verbose_name=_('Name'))
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = _('Content importances')
-        verbose_name = _('Content importance')
-        ordering = ['name']
-        default_permissions = ()
-
-
-@register_snippet
-class ContentType(ClusterableModel):
-    name = models.CharField(max_length=20, unique=True, verbose_name=_('Name'))
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = _('Content types')
-        verbose_name = _('Content type')
         ordering = ['name']
         default_permissions = ()
