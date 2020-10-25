@@ -44,13 +44,6 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
-                                    <div class="help-icon m-t-md">
-                                        <h2 class="h-100">
-                                            <div class="badge badge-primary">{% trans 'Direction:' %} {{ last_content.direction }}</div>
-                                            <div class="badge badge-primary">{% trans 'Importance:' %} {{ last_content.importance }}</div>
-                                            <div class="badge badge-primary">{% trans 'Content datetime:' %} {{ last_content.content_datetime|date:'d.m.Y H:i' }}</div>
-                                        </h2>
-                                    </div>
                                     <hr>
 
                                     <h4>{% trans 'Body' %}</h4>
@@ -59,16 +52,14 @@
                                         {{ last_content.body|richtext }}
                                     </div>
                                     <hr>
-                                        <div class="">
-                                            <dt>{% trans 'Categories' %}:</dt>
-                                            {% with categories=last_content.categories.all %}
-                                                {% if categories %}
-                                                    {% for category in categories %}
-                                                        <span class="badge badge-secondary">{{ category.name }}</span>
-                                                    {% endfor %}
-                                                {% endif %}
-                                            {% endwith %}
-                                        </div>
+
+                                    <div class="help-icon m-t-md">
+                                        <h2 class="h-100">
+                                            <div class="badge badge-primary">{% trans 'Direction:' %} {{ last_content.direction }}</div>
+                                            <div class="badge badge-primary">{% trans 'Importance:' %} {{ last_content.importance }}</div>
+                                            <div class="badge badge-primary">{% trans 'Content datetime:' %} {{ last_content.content_datetime|date:'d.m.Y H:i' }}</div>
+                                        </h2>
+                                    </div>
 
                                     <hr>
 

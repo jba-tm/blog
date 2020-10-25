@@ -1,20 +1,20 @@
-from django import forms
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import models
-from modelcluster.contrib.taggit import ClusterTaggableManager
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.models import ClusterableModel
-from taggit.models import TaggedItemBase
+from django.utils.translation import ugettext_lazy as _
+
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
-from django.utils.translation import ugettext_lazy as _
 from wagtail.snippets.models import register_snippet
+from wagtail.api import APIField
 
 
-# from blog import settings
+from taggit.models import TaggedItemBase
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 
 
 class ContentIndexPage(Page):
@@ -102,6 +102,14 @@ class ContentPage(Page):
         ], heading=_('Content information'), help_text=_('Content base information')),
         FieldPanel('body', classname="full"),
         InlinePanel('gallery_images', label="Gallery images", help_text=_('Content images')),
+    ]
+
+    api_fields = [
+        APIField('last_published_at'),
+        APIField('body'),
+        APIField('category'),
+        APIField('tags'),
+        APIField('gallery_images'),
     ]
 
     class Meta:
