@@ -38,7 +38,7 @@ from wagtail.search.models import Query
 #     'search_results': search_results,
 # })
 
-class SearchView(LoginRequiredMixin, ListView):
+class SearchView(ListView):
     template_name = 'search/search.html'
     context_object_name = 'search_results'
     paginate_by = 25
