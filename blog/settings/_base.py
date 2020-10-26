@@ -404,5 +404,8 @@ LOGGING = {
     }
 }
 
+# Wagtail Api
+WAGTAILAPI_BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
+
 # Allauth settings
 SITE_ID = 1
