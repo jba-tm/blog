@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import json
+import dj_database_url
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
@@ -407,3 +408,6 @@ LOGGING = {
 
 # Allauth settings
 SITE_ID = 1
+
+#
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
