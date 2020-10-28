@@ -359,7 +359,7 @@ AXES_ONLY_USER_FAILURES = True
 # Logging settings
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse',
@@ -375,6 +375,9 @@ LOGGING = {
         }
     },
     'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
         'console_dev': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
@@ -396,7 +399,8 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console_dev', 'console_prod'],
+            'handlers': ['console_dev', 'console_prod', 'console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
         },
         'django.server': {
             'handlers': ['file'],
@@ -405,6 +409,9 @@ LOGGING = {
         },
     }
 }
+
+
+
 
 # Allauth settings
 SITE_ID = 1
