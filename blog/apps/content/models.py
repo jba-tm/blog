@@ -164,7 +164,6 @@ class ContentPageGalleryImage(Orderable):
     ]
 
     api_fields = [
-        APIField('page'),
         APIField('image'),
         APIField('caption'),
     ]
