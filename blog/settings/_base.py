@@ -65,7 +65,6 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.api.v2',
-    'wagtail.contrib.postgres_search',
 
     'modelcluster',
     'taggit',
@@ -80,12 +79,7 @@ INSTALLED_APPS = [
 
     # Package applications
     'rest_framework',
-    'axes',
     'weasyprint',
-
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
 
     # Custom applications
     'blog.apps.content',
@@ -104,15 +98,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
-
-    'blog.apps.utils.middleware.OnlineNowMiddleware',
-
-    # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
-    # It only formats user lockout messages and renders Axes lockout responses
-    # on failed user authentication attempts from login views.
-    # If you do not want Axes to override the authentication response
-    # you can skip installing the middleware and use your own views.
-    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = PROJECT_NAME + '.urls'
@@ -137,69 +122,33 @@ TEMPLATES = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    'axes.backends.AxesBackend',
-
-    # Django ModelBackend is the default authentication backend.
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    # 'allauth.account.auth_backends.AuthenticationBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     # Django ModelBackend is the default authentication backend.
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 WSGI_APPLICATION = PROJECT_NAME + '.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    #
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'application',
-    #     'USER': 'root',
-    #     'PASSWORD': "",
-    #     'HOST': "",
-    #     'PORT': "",
-    #     'OPTIONS': {
-    #         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-    #     }
-    # }
-
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': get_secret('DATABASE_NAME'),
         'USER': get_secret('DATABASE_USER'),
         'PASSWORD': get_secret('DATABASE_PASSWORD'),
         'HOST': get_secret('DATABASE_HOST'),
         'PORT': get_secret('DATABASE_PORT'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     },
 }
 
 WAGTAILSEARCH_BACKENDS = {
-    # 'default': {
-    #     'BACKEND': 'wagtail.search.backends.db',
-    # },
-
     'default': {
-        'BACKEND': 'wagtail.contrib.postgres_search.backend',
-        'AUTO_UPDATE': True,
-        'ATOMIC_REBUILD': True,
+        'BACKEND': 'wagtail.search.backends.db',
     },
-
-    # 'default': {
-    #     'BACKEND': 'wagtail.search.backends.elasticsearch7',
-    #     'URLS': ['http://localhost:9200'],
-    #     'INDEX': 'wagtail',
-    #     'TIMEOUT': 5,
-    #     'OPTIONS': {},
-    #     'INDEX_SETTINGS': {},
-    # },
-
 }
 
 # Password validation
@@ -244,22 +193,6 @@ LANGUAGES = WAGTAILADMIN_PERMITTED_LANGUAGES = [
     ('en', _('English')),
     ('ru', _('Russian')),
 ]
-
-# DATE_FORMAT = 'd.m.Y'
-# TIME_FORMAT = 'G:i'
-# DATETIME_FORMAT = 'd.m.Y H:i'
-#
-# DATETIME_INPUT_FORMATS = [
-#     # '%d.%m.%Y %H:%M:%S',     # '25.10.2006 14:30:59'
-#     # '%d.%m.%Y %H:%M:%S.%f',  # '25.10.2006 14:30:59.000200'
-#     '%d.%m.%Y %H:%M',  # '25.10.2006 14:30'
-#     # '%d.%m.%Y',              # '25.10.2006'
-#     # '%d.%m.%y %H:%M:%S',     # '25.10.06 14:30:59'
-#     # '%d.%m.%y %H:%M:%S.%f',  # '25.10.06 14:30:59.000200'
-#     '%d.%m.%y %H:%M',  # '25.10.06 14:30'
-#     # '%d.%m.%y',              # '25.10.06'
-# ]
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -350,11 +283,6 @@ SESSION_COOKIE_AGE = 5 * 60
 SESSION_COOKIE_SAMESITE = 'Strict'
 
 SESSION_SAVE_EVERY_REQUEST = True
-
-# django-axes settings
-SILENCED_SYSTEM_CHECKS = ['axes.W003']
-
-AXES_ONLY_USER_FAILURES = True
 
 # Logging settings
 LOGGING = {
