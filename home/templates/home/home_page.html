@@ -23,7 +23,7 @@
                                             <div class="m-auto">
                                                 <div class="image-imitation p-0 m-auto">
                                                     {% if last_content.gallery_images.all.count %}
-                                                        <img src="{% image_url last_content.gallery_images.first.image 'height-300' %}"
+                                                        <img src="{% image_url last_content.gallery_images.first.image 'width-300' %}"
                                                              class="d-block mt-auto m-auto" alt="{{ last_content.gallery_images.first.caption }}">
                                                     {% else%}
                                                         <img src="{% static 'images/no_image.png' %}" alt="{% trans 'No image' %}" height="300" />
