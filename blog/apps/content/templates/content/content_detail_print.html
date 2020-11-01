@@ -12,7 +12,7 @@
     {% if contentpage.gallery_images.all.count %}
      {% for item in contentpage.gallery_images.all %}
         <div>
-          <img src="{% image_url item.image 'height-300' %}"  class="image-center" alt="{{ item.caption }}">
+          <img src="{% image_url item.image 'height-300' %}" class="image-center" alt="{{ item.caption }}"><br>
         </div>
      {% endfor %}
     <br>

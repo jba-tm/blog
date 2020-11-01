@@ -163,6 +163,11 @@ class ContentPageGalleryImage(Orderable):
         FieldPanel('caption'),
     ]
 
+    api_fields = [
+        APIField('image'),
+        APIField('caption'),
+    ]
+
 
 @register_snippet
 class ContentCategory(ClusterableModel):

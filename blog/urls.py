@@ -42,7 +42,7 @@ if settings.DEBUG:
 
 urlpatterns = urlpatterns + [
     # .. Existing urls
-    path('', include('allauth.urls')),  # Creates urls like yourwebsite.com/login/
+    # path('', include('allauth.urls')),  # Creates urls like yourwebsite.com/login/
     # url(r'^accounts/', include('allauth.urls')), # Creates urls like yourwebsite.com/accounts/login/
 
     # For anything not caught by a more specific rule above, hand over to
