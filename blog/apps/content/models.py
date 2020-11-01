@@ -177,6 +177,10 @@ class ContentCategory(ClusterableModel):
         FieldPanel('name'),
     ]
 
+    api_fields = [
+        APIField('name'),
+    ]
+
     def __str__(self):
         return self.name
 

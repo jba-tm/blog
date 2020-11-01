@@ -66,21 +66,7 @@
                                         <div class="col-sm-4 text-sm-right"><dt>{% trans 'Category' %}:</dt> </div>
                                         <div class="col-sm-8 text-sm-left"> <dd class="mb-1">{{ page.category|default:'' }}</dd></div>
                                     </dl>
-{#                                    <dl class="row mb-0">#}
-{#                                        <div class="col-sm-4 text-sm-right">#}
-{#                                            <dt>{% trans 'Categories' %}:</dt>#}
-{#                                        </div>#}
-{#                                        <div class="col-sm-8 text-sm-left">#}
-{##}
-{#                                            {% with categories=page.categories.all %}#}
-{#                                                {% if categories %}#}
-{#                                                    {% for category in categories %}#}
-{#                                                        <span class="badge badge-primary">{{ category.name }}</span>#}
-{#                                                    {% endfor %}#}
-{#                                                {% endif %}#}
-{#                                            {% endwith %}#}
-{#                                        </div>#}
-{#                                    </dl>#}
+
                                 </div>
                             </div>
 
@@ -108,7 +94,9 @@
                                                         <div class="lightBoxGallery">
                                                              {% for item in page.gallery_images.all %}
                                                                  <div class="float-left">
-                                                                    <a href="{% image_url item.image 'original' %}" title="{{ item.caption }}"  data-gallery="">{% image item.image width-100 %}</a>
+                                                                    <a href="{% image_url item.image 'original' %}" title="{{ item.caption }}"  data-gallery="">
+                                                                         {% image item.image width-100 %}
+                                                                        </a>
                                                                     <p>{{ item.caption }}</p>
                                                                  </div>
                                                              {% endfor %}

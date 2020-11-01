@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import json
-import dj_database_url
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
@@ -241,6 +240,10 @@ LOGOUT_REDIRECT_URL = 'login'
 # ACCOUNT_USERNAME_BLACKLIST = ["admin", "god"]
 # ACCOUNT_USERNAME_MIN_LENGTH = 2
 
+EMAIL_USE_TLS = True
+SERVER_EMAIL = get_secret('EMAIL_HOST_USER')
+DEFAULT_FROM_EMAIL = get_secret('EMAIL_HOST_USER')
+
 # Wagtail settings
 WAGTAIL_SITE_NAME = "blog"
 
@@ -271,7 +274,7 @@ WAGTAILADMIN_GLOBAL_PAGE_EDIT_LOCK = True
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://blog.com'
+BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
 
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
@@ -338,11 +341,8 @@ LOGGING = {
     }
 }
 
-
-
+# Wagtail Api
+WAGTAILAPI_BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
 
 # Allauth settings
 SITE_ID = 1
-
-#
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
