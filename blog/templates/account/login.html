@@ -40,7 +40,7 @@
 
         {% block above_login %}{% endblock %}
 
-        <form action="{% block form_action %}{% url 'login' %}{% endblock %}" method="post" autocomplete="off" novalidate>
+        <form action="{% block form_action %}{% url 'account_login' %}{% endblock %}" method="post" autocomplete="off" novalidate>
             {% block login_form %}
             {% csrf_token %}
 
