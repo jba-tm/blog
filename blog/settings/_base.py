@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     # Custom applications
     'blog.apps.content',
@@ -359,3 +360,14 @@ WAGTAILAPI_BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
 
 # Allauth settings
 SITE_ID = 1
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
