@@ -1,10 +1,15 @@
 from datetime import timedelta
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import QuerySet
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+from wagtail.core.models import Page
+
 
 # Create your models here.
 
@@ -100,3 +105,47 @@ class SoftDeletionModel(models.Model):
 
     def filter(self):
         super().filter(self)
+
+###########################
+# Wagtail pagination page #
+###########################
+
+
+class PaginationPage(Page):
+    is_creatable = False
+    pagination_item_per_page = 25
+    context_pagination_name = 'context_pages'
+    pagination_query = None
+    pagination_can_none = False
+    pagination_order_by = '-last_published_at'
+
+    def get_context(self, request, *args, **kwargs):
+        """Adding custom stuff to our context."""
+        context = super().get_context(request, *args, **kwargs)
+        # Get all posts
+        if self.pagination_query or (not self.pagination_query and self.pagination_can_none):
+            all_pages = self.pagination_query
+        else:
+            all_pages = self.get_children().live().order_by(self.pagination_order_by)
+        # Paginate all posts by 2 per page
+        paginator = Paginator(all_pages, self.pagination_item_per_page)
+        # Try to get the ?page=x value
+        page = request.GET.get("page")
+        try:
+            # If the page exists and the ?page=x is an int
+            context_pages = paginator.page(page)
+        except PageNotAnInteger:
+            # If the ?page=x is not an int; show the first page
+            context_pages = paginator.page(1)
+        except EmptyPage:
+            # If the ?page=x is out of range (too high most likely)
+            # Then return the last page
+            context_pages = paginator.page(paginator.num_pages)
+
+        # "posts" will have child pages; you'll need to use .specific in the template
+        # in order to access child properties, such as youtube_video_id and subtitle
+        context[self.context_pagination_name] = context_pages
+        return context
+
+    class Meta:
+        abstract = True

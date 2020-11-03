@@ -286,6 +286,8 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 
 WAGTAILADMIN_GLOBAL_PAGE_EDIT_LOCK = True
 
+WAGTAILAPI_BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
+
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
@@ -355,8 +357,6 @@ LOGGING = {
     }
 }
 
-# Wagtail Api
-WAGTAILAPI_BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
 
 # Allauth settings
 SITE_ID = 1
