@@ -3,5 +3,5 @@ from .views import ApiUserRecordView
 
 app_name = 'api'
 urlpatterns = [
-    path('users/', ApiUserRecordView.as_view(), name='users'),
+    path('user/', ApiUserRecordView.as_view(), name='users'),
 ]
