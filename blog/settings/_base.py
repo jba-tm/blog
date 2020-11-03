@@ -78,6 +78,7 @@ INSTALLED_APPS = [
 
     # Package applications
     'rest_framework',
+    'rest_framework.authtoken',
     'weasyprint',
 
     'allauth',
@@ -88,7 +89,6 @@ INSTALLED_APPS = [
     # Custom applications
     'blog.apps.content',
     'blog.apps.core',
-    'blog.apps.utils',
 ]
 
 MIDDLEWARE = [
@@ -293,9 +293,9 @@ BASE_URL = 'https://pythonanywhere852.pythonanywhere.com/'
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-SESSION_COOKIE_AGE = 5 * 60
+# SESSION_COOKIE_AGE = 5 * 60
 
 SESSION_COOKIE_SAMESITE = 'Strict'
 
@@ -370,4 +370,14 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         }
     }
+}
+
+# Rest Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }

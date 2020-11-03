@@ -10,6 +10,8 @@ from wagtail.documents import urls as wagtaildocs_urls
 # from wagtail.admin.views.account import LogoutView
 from wagtail.images.views.serve import ServeView
 
+from rest_framework.authtoken import views as api_views
+
 from search import views as search_views
 # from .apps.utils.forms import AppLoginForm
 
@@ -28,6 +30,9 @@ urlpatterns = [
     # path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
 
     path('content/', include('blog.apps.content.urls')),
+
+    path('api/', include('blog.apps.api.urls', namespace='api')),
+    path('api-token-auth/', api_views.obtain_auth_token, name='api-token-auth'),
 ] + [
     url(r'^images/([^/]*)/(\d*)/([^/]*)/[^/]*$', ServeView.as_view(), name='wagtailimages_serve'),
 ]
