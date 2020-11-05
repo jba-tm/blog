@@ -16,9 +16,16 @@
                 <div class="ml-2">{% now 'd.m.Y H:i' %}</div>
             </li>
             <li>
-                <a href="{% url 'account_logout' %}">
+
+            {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout' %}">
                     <i class="fa fa-sign-out-alt"></i> {% trans 'Log out' %}
-                </a>
+                    </a>
+            {% else %}
+                    <a href="{% url 'account_login' %}">
+                        <i class="fa fa-sign-in"></i> {% trans 'Login' %}
+                    </a>
+            {% endif %}
             </li>
 {#            <li>#}
 {#                <a class="right-sidebar-toggle">#}

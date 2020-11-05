@@ -89,6 +89,7 @@
                 <li class="submit">
                     {% block submit_buttons %}
                     <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Signing in…' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
+                        <a href="{% url account_signup %}" class="button button-longrunning"> {% trans 'Sign up' %}</a>
                     {% endblock %}
                 </li>
             </ul>
