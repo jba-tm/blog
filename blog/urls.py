@@ -2,18 +2,15 @@ from django.conf import settings
 from django.conf.urls import url
 from django.urls import include, path
 from django.contrib import admin
-# from django.contrib.auth.views import LoginView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
-# from wagtail.admin.views.account import LogoutView
 from wagtail.images.views.serve import ServeView
 
 from rest_framework.authtoken import views as api_views
 
 from search import views as search_views
-# from .apps.utils.forms import AppLoginForm
 
 
 urlpatterns = [
@@ -23,11 +20,6 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
 
     path('search/', search_views.SearchView.as_view(), name='search'),
-
-    # path('login/', LoginView.as_view(template_name=settings.WAGTAIL_FRONTEND_LOGIN_TEMPLATE,
-    #                                  form_class=AppLoginForm, redirect_authenticated_user=True), name='login'),
-
-    # path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
 
     path('content/', include('blog.apps.content.urls')),
 

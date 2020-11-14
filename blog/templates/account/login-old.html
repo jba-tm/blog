@@ -1,0 +1,111 @@
+{% extends "wagtailadmin/admin_base.html" %}
+{% load wagtailadmin_tags i18n static %}
+{% block titletag %}{% trans "Sign in" %}{% endblock %}
+{% block bodyclass %}login{% endblock %}
+
+{% block branding_title %}
+    {% trans 'Blog' %}
+{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+
+    <link rel="stylesheet" href="{% versioned_static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
+    <style>
+        div.messages, main.content-wrapper, body {
+            background-color: #28a745 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block branding_favicon %}
+    <link rel="shortcut icon" href="" />
+{% endblock %}
+
+
+{% block furniture %}
+    <main class="content-wrapper" role="main">
+        {% if messages or form.errors %}
+            <div class="messages">
+                <ul>
+                    {% if form.errors %}
+                        <li class="error">{% blocktrans %}Your {{ username_field }} and password didn't match. Please try again.{% endblocktrans %}</li>
+                    {% endif %}
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% block above_login %}{% endblock %}
+
+        <form action="{% block form_action %}{% url 'account_login' %}{% endblock %}" method="post" autocomplete="off" novalidate>
+            {% block login_form %}
+            {% csrf_token %}
+
+
+            <h1>{% block branding_login %}{% trans "Sign in to System" %}{% endblock %}</h1>
+
+            <ul class="fields">
+                {% block fields %}
+                <li class="full">
+                    <div class="field iconfield">
+                        {{ form.username.label_tag }}
+                        <div class="input icon-user">
+                            {{ form.login }}
+                        </div>
+                    </div>
+                </li>
+                <li class="full">
+                    <div class="field iconfield">
+                        {{ form.password.label_tag }}
+                        <div class="input icon-password">
+                            {{ form.password }}
+                        </div>
+                    </div>
+                </li>
+
+                {% block extra_fields %}
+                {% for field_name, field in form.extra_fields %}
+                <li class="full">
+                    {{ field.label_tag }}
+                    <div class="field iconfield">
+                        {{ field }}
+                    </div>
+                </li>
+                {% endfor %}
+                {% endblock extra_fields %}
+
+                {% comment %}
+                    Removed until functionality exists
+                    <li class="checkbox">
+                        <div class="field">
+                            <label><input type="checkbox" />{% trans "Remember me" %}</label>
+                        </div>
+                    </li>
+                {% endcomment %}
+                {% endblock %}
+                <li class="submit">
+                    {% block submit_buttons %}
+                    <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Signing in…' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
+                        <a href="{% url 'account_signup' %}" class="button button-longrunning"> {% trans 'Sign up' %}</a>
+                    {% endblock %}
+                </li>
+            </ul>
+        {% endblock %}
+        </form>
+
+        {% block below_login %}{% endblock %}
+
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    $(function(){
+        $('form input[name=username]').trigger('focus');
+    })
+</script>
+{% endblock %}

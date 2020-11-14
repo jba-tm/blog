@@ -1,0 +1,85 @@
+{% extends 'account/base.html' %}
+{% load static i18n %}
+
+{% block css %}
+
+    <link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/font-awesome/css/fontawesome-all.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'plugins/iCheck/icheck.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <style>
+        body {
+            background: url("{% static 'images/register_bg.jpg' %}") center center no-repeat;
+            background-size: cover;
+        }
+
+        h3, p {
+            color: #e6e6e6;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">IN+</h1>
+
+            </div>
+            <h3>Register to IN+</h3>
+            <p>Create account to see it in action.</p>
+            <form class="signup m-t" role="form" method="post" action="{% url 'account_signup' %}" id="signup_form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="{% trans 'Username' %}"
+                           autocomplete="username" minlength="2"
+                           maxlength="150" required="" id="id_username">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="{% trans 'E-mail address' %}"
+                           autocomplete="email" required="" id="id_email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password1" placeholder="{% trans 'Password' %}"
+                           autocomplete="new-password" required="" id="id_password1">
+                </div>
+                <div class="form-group">
+                    <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy
+                    </label></div>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+
+                <p class="text-muted text-center"><small>Already have an account?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="login.html">Login</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_body %}
+
+    <!-- Mainly scripts -->
+    <!-- jquery 3.4.1 -->
+    <script src="{% static 'plugins/jQuery/jquery-3.4.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="{% static 'plugins/popper/popper.min.js' %}"></script>
+    <!-- bootstap js -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- iCheck -->
+    <script src="{% static 'plugins/iCheck/icheck.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+{% endblock %}

@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
 
     # Custom applications
     'blog.apps.content',
@@ -141,6 +142,10 @@ WSGI_APPLICATION = PROJECT_NAME + '.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'mysql': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': get_secret('DATABASE_NAME'),
         'USER': get_secret('DATABASE_USER'),
@@ -263,10 +268,10 @@ WAGTAIL_SITE_NAME = "blog"
 
 WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 
-WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'utils/login.html'
-
-WAGTAIL_USER_EDIT_FORM = 'blog.apps.utils.forms.CustomUserEditForm'
-WAGTAIL_USER_CREATION_FORM = 'blog.apps.utils.forms.CustomUserCreationForm'
+# WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'utils/login.html'
+#
+# WAGTAIL_USER_EDIT_FORM = 'blog.apps.utils.forms.CustomUserEditForm'
+# WAGTAIL_USER_CREATION_FORM = 'blog.apps.utils.forms.CustomUserCreationForm'
 
 # WAGTAIL_PASSWORD_RESET_ENABLED = False
 

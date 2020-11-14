@@ -1,111 +1,83 @@
-{% extends "wagtailadmin/admin_base.html" %}
-{% load wagtailadmin_tags i18n static %}
-{% block titletag %}{% trans "Sign in" %}{% endblock %}
-{% block bodyclass %}login{% endblock %}
+{% extends 'account/base.html' %}
+{% load i18n static %}
 
-{% block branding_title %}
-    {% trans 'Blog' %}
-{% endblock %}
+{% block css %}
+    <link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/font-awesome/css/fontawesome-all.min.css' %}" rel="stylesheet">
 
-{% block extra_css %}
-    {{ block.super }}
-
-    <link rel="stylesheet" href="{% versioned_static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
+    <link href="{% static 'plugins/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <style>
-        div.messages, main.content-wrapper, body {
-            background-color: #28a745 !important;
+        body {
+            background: url("{% static 'images/login_bg.jpg' %}") center center no-repeat;
+            background-size: cover;
+        }
+
+        h3, p {
+            color: #e6e6e6;
         }
     </style>
 {% endblock %}
 
-{% block branding_favicon %}
-    <link rel="shortcut icon" href="" />
-{% endblock %}
+{% block content %}
 
+    <div class="loginColumns animated fadeInDown">
+        <div class="row">
 
-{% block furniture %}
-    <main class="content-wrapper" role="main">
-        {% if messages or form.errors %}
-            <div class="messages">
-                <ul>
-                    {% if form.errors %}
-                        <li class="error">{% blocktrans %}Your {{ username_field }} and password didn't match. Please try again.{% endblocktrans %}</li>
-                    {% endif %}
-                    {% for message in messages %}
-                        <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
+            <div class="col-md-6">
+                <h2 class="font-bold">{% trans 'Welcome to Blog' %}</h2>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s.
+                </p>
+
+                <p>
+                    When an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+
+                <p>
+                    <small>It has survived not only five centuries, but also the leap into electronic typesetting,
+                        remaining essentially unchanged.</small>
+                </p>
+
             </div>
-        {% endif %}
-
-        {% block above_login %}{% endblock %}
-
-        <form action="{% block form_action %}{% url 'account_login' %}{% endblock %}" method="post" autocomplete="off" novalidate>
-            {% block login_form %}
-            {% csrf_token %}
-
-
-            <h1>{% block branding_login %}{% trans "Sign in to System" %}{% endblock %}</h1>
-
-            <ul class="fields">
-                {% block fields %}
-                <li class="full">
-                    <div class="field iconfield">
-                        {{ form.username.label_tag }}
-                        <div class="input icon-user">
-                            {{ form.login }}
+            <div class="col-md-6">
+                <div class="ibox-content">
+                    <form class="m-t" role="form" action="{% url 'account_login' %}" method="post" autocomplete="off">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="login" id="id_login" autocomplete="email"
+                                   class="form-control"
+                                   placeholder="Username or e-mail" required="">
                         </div>
-                    </div>
-                </li>
-                <li class="full">
-                    <div class="field iconfield">
-                        {{ form.password.label_tag }}
-                        <div class="input icon-password">
-                            {{ form.password }}
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Password" class="form-control"
+                                   autocomplete="current-password" required="" id="id_password">
                         </div>
-                    </div>
-                </li>
+                        <button type="submit" class="btn btn-primary block full-width m-b">{% trans 'Forgot password?' %}</button>
 
-                {% block extra_fields %}
-                {% for field_name, field in form.extra_fields %}
-                <li class="full">
-                    {{ field.label_tag }}
-                    <div class="field iconfield">
-                        {{ field }}
-                    </div>
-                </li>
-                {% endfor %}
-                {% endblock extra_fields %}
+                        <a href="#">
+                            <small>{% trans 'Forgot password?' %}</small>
+                        </a>
 
-                {% comment %}
-                    Removed until functionality exists
-                    <li class="checkbox">
-                        <div class="field">
-                            <label><input type="checkbox" />{% trans "Remember me" %}</label>
-                        </div>
-                    </li>
-                {% endcomment %}
-                {% endblock %}
-                <li class="submit">
-                    {% block submit_buttons %}
-                    <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Signing in…' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
-                        <a href="{% url 'account_signup' %}" class="button button-longrunning"> {% trans 'Sign up' %}</a>
-                    {% endblock %}
-                </li>
-            </ul>
-        {% endblock %}
-        </form>
-
-        {% block below_login %}{% endblock %}
-
-    </main>
+                        <p class="text-muted text-center">
+                            <small>{% trans 'Do not have an account?' %}</small>
+                        </p>
+                        <a class="btn btn-sm btn-white btn-block" href="{% url 'account_signup' %}">{% trans 'Create an account' %}</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                {% trans 'Copyright by Jumageldiyew B.' %}
+            </div>
+            <div class="col-md-6 text-right">
+                <small>© 2020</small>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block extra_js %}
-{{ block.super }}
-<script>
-    $(function(){
-        $('form input[name=username]').trigger('focus');
-    })
-</script>
-{% endblock %}
+
